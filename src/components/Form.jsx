@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 
-const Form = ({ mesh, setMesh, dispatch }) => {
+const Form = ({ mesh, setMesh, dispatch, rot, setRot }) => {
   const handleClick = (e) => {
     e.preventDefault()
     dispatch({
@@ -79,8 +79,8 @@ const Form = ({ mesh, setMesh, dispatch }) => {
               <label htmlFor="pX">X: {mesh.pX}</label>
               <input
                 type="range"
-                min="-5"
-                max="5"
+                min="-20"
+                max="20"
                 value={mesh.pX}
                 name="pX"
                 id=""
@@ -91,8 +91,8 @@ const Form = ({ mesh, setMesh, dispatch }) => {
               <label htmlFor="pY">Y: {mesh.pY}</label>
               <input
                 type="range"
-                min="-5"
-                max="5"
+                min="-10"
+                max="20"
                 value={mesh.pY}
                 name="pY"
                 id=""
@@ -103,8 +103,8 @@ const Form = ({ mesh, setMesh, dispatch }) => {
               <label htmlFor="pZ">Z: {mesh.pZ}</label>
               <input
                 type="range"
-                min="-5"
-                max="5"
+                min="-20"
+                max="20"
                 value={mesh.pZ}
                 name="pZ"
                 id=""

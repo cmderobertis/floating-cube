@@ -77,7 +77,6 @@ function App() {
           speed={mesh.speed}
         />
         {state.map((mesh, idx) => {
-          console.log(mesh)
           return (
             <SpinningMesh
               key={idx}

@@ -1,36 +1,31 @@
 import React, { useState } from "react"
 
-const Form = ({ setMesh }) => {
-  const [args, setArgs] = useState({
-    sX: 3,
-    sY: 3,
-    sZ: 3,
-  })
-  const [position, setPosition] = useState({
-    pX: 0,
-    pY: 0,
-    pZ: 0,
-  })
-  const [color, setColor] = useState("#1D90FF")
-  const [speed, setSpeed] = useState(3)
-
+const Form = ({ mesh, setMesh, dispatch }) => {
   const handleClick = (e) => {
     e.preventDefault()
+    dispatch({
+      args: [mesh.aX, mesh.aY, mesh.aZ],
+      position: [mesh.pX, mesh.pY, mesh.pZ],
+      color: mesh.color,
+      speed: mesh.speed,
+    })
     setMesh({
-      args: [args.sX, args.sY, args.sZ],
-      position: [position.pX, position.pY, position.pZ],
-      color: color,
-      speed: speed,
+      aX: 3,
+      aY: 3,
+      aZ: 3,
+      pX: 0,
+      pY: 0,
+      pZ: 0,
+      color: "#1D90FF",
+      speed: 3,
     })
   }
 
   const handleChange = (e) => {
-    switch (e.target.name[0]) {
-      case "s":
-        setArgs({ ...args, [e.target.name]: e.target.value })
-      case "p":
-        setPosition({ ...position, [e.target.name]: e.target.value })
-    }
+    setMesh({
+      ...mesh,
+      [e.target.name]: e.target.value,
+    })
   }
 
   return (
@@ -41,37 +36,37 @@ const Form = ({ setMesh }) => {
           <div className="row align-items-center">
             <div className="col">
               <p className="mb-0">Size</p>
-              <label htmlFor="sX">X: {args.sX}</label>
+              <label htmlFor="aX">X: {mesh.aX}</label>
               <input
                 type="range"
                 min="1"
                 max="5"
-                value={args.sX}
-                name="sX"
+                value={mesh.aX}
+                name="aX"
                 id=""
                 onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="col">
-              <label htmlFor="sY">Y: {args.sY}</label>
+              <label htmlFor="aY">Y: {mesh.aY}</label>
               <input
                 type="range"
                 min="1"
                 max="5"
-                value={args.sY}
-                name="sY"
+                value={mesh.aY}
+                name="aY"
                 id=""
                 onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="col">
-              <label htmlFor="sZ">Z: {args.sZ}</label>
+              <label htmlFor="aZ">Z: {mesh.aZ}</label>
               <input
                 type="range"
                 min="1"
                 max="5"
-                value={args.sZ}
-                name="sZ"
+                value={mesh.aZ}
+                name="aZ"
                 id=""
                 onChange={(e) => handleChange(e)}
               />
@@ -81,36 +76,36 @@ const Form = ({ setMesh }) => {
           <div className="row align-items-center">
             <div className="col">
               <p className="mb-0">Position</p>
-              <label htmlFor="pX">X: {position.pX}</label>
+              <label htmlFor="pX">X: {mesh.pX}</label>
               <input
                 type="range"
                 min="-5"
                 max="5"
-                value={position.pX}
+                value={mesh.pX}
                 name="pX"
                 id=""
                 onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="col">
-              <label htmlFor="pY">Y: {position.pY}</label>
+              <label htmlFor="pY">Y: {mesh.pY}</label>
               <input
                 type="range"
                 min="-5"
                 max="5"
-                value={position.pY}
+                value={mesh.pY}
                 name="pY"
                 id=""
                 onChange={(e) => handleChange(e)}
               />
             </div>
             <div className="col">
-              <label htmlFor="pZ">Z: {position.pZ}</label>
+              <label htmlFor="pZ">Z: {mesh.pZ}</label>
               <input
                 type="range"
                 min="-5"
                 max="5"
-                value={position.pZ}
+                value={mesh.pZ}
                 name="pZ"
                 id=""
                 onChange={(e) => handleChange(e)}
@@ -122,20 +117,20 @@ const Form = ({ setMesh }) => {
             className="w-100 mb-3"
             type="color"
             name="color"
-            value={color}
-            onChange={(e) => setColor(e.target.value)}
+            value={mesh.color}
+            onChange={(e) => handleChange(e)}
           />
           <div className="row align-items-center">
             <div className="col">
               <p className="mb-0">Speed</p>
-              <label htmlFor="speed">{speed}</label>
+              <label htmlFor="speed">{mesh.speed}</label>
               <input
                 type="range"
                 min="0"
                 max="20"
-                value={speed}
+                value={mesh.speed}
                 name="speed"
-                onChange={(e) => setSpeed(e.target.value)}
+                onChange={(e) => handleChange(e)}
               />
             </div>
           </div>
@@ -143,7 +138,7 @@ const Form = ({ setMesh }) => {
             className="btn btn-primary w-100 mt-3"
             onClick={(e) => handleClick(e)}
           >
-            Update
+            Add
           </button>
         </form>
       </div>

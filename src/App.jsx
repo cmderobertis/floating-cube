@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useReducer } from "react"
 import SpinningMesh from "./components/SpinningMesh"
 import Form from "./components/Form"
 import { Html, softShadows, OrbitControls } from "@react-three/drei"
@@ -8,19 +8,24 @@ extend()
 softShadows()
 
 function App() {
-  const [meshes, setMeshes] = useState([
-    { args: [3, 3, 3], position: [0, 0, 0], color: "dodgerblue", speed: 3 },
-  ])
   const [mesh, setMesh] = useState({
-    args: [3, 3, 3],
-    position: [0, 0, 0],
-    color: "dodgerblue",
+    aX: 3,
+    aY: 3,
+    aZ: 3,
+    pX: 0,
+    pY: 0,
+    pZ: 0,
+    color: "#1D90FF",
     speed: 3,
   })
 
-  const addMesh = (data) => {
-    setMeshes([...meshes, data])
+  const initialState = []
+
+  function reducer(state, action) {
+    return [...state, action]
   }
+
+  const [state, dispatch] = useReducer(reducer, initialState)
 
   return (
     <>
@@ -28,7 +33,12 @@ function App() {
         <Html fullscreen>
           <div className="row mt-3 justify-content-start">
             <div className="col-4 ms-3 text-center">
-              <Form setMesh={setMesh} />
+              <Form
+                mesh={mesh}
+                setMesh={setMesh}
+                state={state}
+                dispatch={dispatch}
+              />
             </div>
             <div className="col">
               <h1 className="text-center text-dark">Edit This Cube</h1>
@@ -60,7 +70,14 @@ function App() {
             <shadowMaterial opacity={0.3} />
           </mesh>
         </group>
-        {/* {meshes.map((mesh, idx) => {
+        <SpinningMesh
+          args={[mesh.aX, mesh.aY, mesh.aZ]}
+          position={[mesh.pX, mesh.pY, mesh.pZ]}
+          color={mesh.color}
+          speed={mesh.speed}
+        />
+        {state.map((mesh, idx) => {
+          console.log(mesh)
           return (
             <SpinningMesh
               key={idx}
@@ -70,21 +87,7 @@ function App() {
               speed={mesh.speed}
             />
           )
-        })} */}
-        <SpinningMesh
-          args={mesh.args}
-          position={mesh.position}
-          color={mesh.color}
-          speed={mesh.speed}
-        />
-        {/* <SpinningMesh
-          args={[3, 2, 1]}
-          position={[0, 1, 0]}
-          color={color2}
-          speed={2}
-        />
-        <SpinningMesh position={[-2, 1, -5]} color={color1} speed={6} />
-        <SpinningMesh position={[5, 1, -2]} color={color3} speed={6} /> */}
+        })}
         <OrbitControls />
       </Canvas>
     </>
